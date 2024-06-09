@@ -21,11 +21,11 @@ router.get(
   passport.authenticate('google', { scope: ['profile', 'email'] })
 );
 
-router.get(
-  '/api/auth/google/callback',
+router.get('/google/callback', 
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
-    res.redirect('/');
+    // Successful authentication, redirect home.
+    res.redirect('/dashboard'); // Adjust the redirect URL as needed
   }
 );
 

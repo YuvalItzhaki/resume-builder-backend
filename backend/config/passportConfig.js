@@ -12,20 +12,25 @@ passport.use(
     async (accessToken, refreshToken, profile, done) => {
       try {
         let user = await User.findOne({ googleId: profile.id });
-        if (!user) {
-          user = await User.create({
-            googleId: profile.id,
-            displayName: profile.displayName,
-            email: profile.emails[0].value,
-          });
-        }
-        done(null, user);
+        if (user) {
+          return done(null, user);
+        } 
+  
+        // If user does not exist, create a new user
+        user = new User({
+          googleId: profile.id,
+          email: profile.emails[0].value,
+          name: profile.displayName,
+          // Add any additional fields here
+        });
+  
+        await user.save();
+        return done(null, user);
       } catch (error) {
-        done(error, null);
+        return done(error, null);
       }
-    }
-  )
-);
+      }
+    ));
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
