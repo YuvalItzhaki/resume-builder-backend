@@ -25,7 +25,7 @@ router.get('/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
     // Successful authentication, redirect home.
-    res.redirect('/dashboard'); // Adjust the redirect URL as needed
+    res.redirect('http://localhost:5173/dashboard'); // Adjust the redirect URL as needed
   }
 );
 
