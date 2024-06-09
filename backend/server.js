@@ -1,31 +1,35 @@
-// backend/server.js
 const express = require('express');
-const dotenv = require('dotenv');
-const cors = require('cors');
-const connectDB = require('./config/db');
-const userRoutes = require('./routes/userRoutes');
-const resumeRoutes = require('./routes/resumeRoutes');
+const passport = require('./config/passportConfig');
+const session = require('express-session');
 const authRoutes = require('./routes/authRoutes');
+const connectDB = require('./config/db');
+const cors = require('cors');
 
-dotenv.config();
 
-connectDB();
-
+// Initialize Express app
 const app = express();
 
-app.use(express.json());
+// Connect to the database
+connectDB();
+
+// Middleware
 app.use(cors({
-  origin: 'http://localhost:5173',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  origin: 'http://localhost:5173', // Adjust this to match your frontend domain
   credentials: true,
 }));
+app.use(express.json());
+app.use(
+  session({
+    secret: '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',
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
-app.use('/api/users', userRoutes);
-app.use('/api/resumes', resumeRoutes);
-app.use('/api', authRoutes);
+// Routes
+app.use('/api/auth', authRoutes);
 
 const PORT = process.env.PORT || 5001;
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -10,14 +10,28 @@
 // module.exports = router;
 // backend/routes/authRoutes.js
 // backend/routes/authRoutes.js
+// backend/routes/authRoutes.js
 const express = require('express');
+const passport = require('passport');
+
 const router = express.Router();
-const { registerUser, loginUser } = require('../controllers/authController');
 
-// Register route
-router.post('/register', registerUser);
+router.get(
+  '/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+);
 
-// Login route
-router.post('/login', loginUser);
+router.get(
+  '/api/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/' }),
+  (req, res) => {
+    res.redirect('/');
+  }
+);
+
+router.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/');
+});
 
 module.exports = router;
