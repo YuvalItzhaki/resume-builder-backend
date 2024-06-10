@@ -1,27 +1,24 @@
-// backend/models/resumeModel.js
 const mongoose = require('mongoose');
 
 const resumeSchema = mongoose.Schema(
   {
+    name: {
+      type: String,
+      required: true
+    },
+    email: {
+      type: String,
+      required: true
+    },
     title: {
       type: String,
-      required: false,
+      required: true
     },
     description: {
       type: String,
-      required: false,
+      required: true
     },
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: false,
-      ref: 'User',
-    },
-  },
-  {
-    timestamps: false,
-  }
-);
-
+  });
 const Resume = mongoose.model('Resume', resumeSchema);
 
 module.exports = Resume;
