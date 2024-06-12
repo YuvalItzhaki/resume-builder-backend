@@ -2,15 +2,18 @@ const asyncHandler = require('express-async-handler');
 const Resume = require('../models/resumeModel');
 
 const saveResume = asyncHandler(async (req, res) => {
-  const { name, email, title, description, ...rest } = req.body;
+  const { name, email, title, contact, tech_skills, languages, education, profile, experience, } = req.body;
 
   const resume = new Resume({
-    // user: req.user._id,
     name,
     email,
     title,
-    description,
-    ...rest
+    contact,
+    tech_skills,
+    languages,
+    education,
+    profile,
+    experience,
   });
 
   const createdResume = await resume.save();

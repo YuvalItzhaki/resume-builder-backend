@@ -14,7 +14,27 @@ const resumeSchema = mongoose.Schema(
       type: String,
       required: true
     },
-    description: {
+    contact: {
+      type: String,
+      required: true
+    },
+    tech_skills: {
+      type: Array,
+      required: true
+    },
+    languages: {
+      type: Array,
+      required: true
+    },
+    education: {
+      type: Array,
+      required: true
+    },
+    profile: {
+      type: String,
+      required: true
+    },
+    experience: {
       type: String,
       required: true
     },
