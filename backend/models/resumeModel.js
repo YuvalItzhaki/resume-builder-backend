@@ -6,38 +6,53 @@ const resumeSchema = mongoose.Schema(
       type: String,
       required: true
     },
-    email: {
-      type: String,
-      required: true
-    },
     title: {
       type: String,
       required: true
     },
     contact: {
-      type: String,
-      required: true
+      email: {
+        type: String,
+        required: true
+      },
+      phone: {
+        type: String,
+        required: true
+      },
+      linkedin: {
+        type: String,
+        required: true
+      },
+      github: {
+        type: String,
+        required: true
+      }
     },
     tech_skills: {
-      type: Array,
+      type: [String],
       required: true
     },
     languages: {
-      type: Array,
+      type: [String],
       required: true
     },
-    education: {
-      type: Array,
-      required: true
-    },
+    education: [{
+      institution: String,
+      degree: String,
+      startDate: String,
+      endDate: String
+    }],
     profile: {
       type: String,
       required: true
     },
-    experience: {
-      type: String,
-      required: true
-    },
+    experience: [{
+      title: String,
+      company: String,
+      startDate: String,
+      endDate: String,
+      duties: [String]
+    }]
   });
 const Resume = mongoose.model('Resume', resumeSchema);
 
