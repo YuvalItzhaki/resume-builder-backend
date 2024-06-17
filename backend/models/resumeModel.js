@@ -12,6 +12,10 @@ const educationSchema = new mongoose.Schema({
   startDate: String,
   endDate: String
 });
+const languageSchema = new mongoose.Schema({
+  value: String,
+  level: String
+});
 const resumeSchema = mongoose.Schema(
   {
     name: {
@@ -25,38 +29,12 @@ const resumeSchema = mongoose.Schema(
     contact: contactSchema,
     education: [educationSchema],
     
-    // contact: {
-    //   email: {
-    //     type: String,
-    //     required: true
-    //   },
-    //   phone: {
-    //     type: String,
-    //     required: true
-    //   },
-    //   linkedin: {
-    //     type: String,
-    //     required: true
-    //   },
-    //   github: {
-    //     type: String,
-    //     required: true
-    //   }
-    // },
     tech_skills: {
       type: [String],
       required: true
     },
-    languages: {
-      type: [String],
-      required: true
-    },
-    // education: [{
-    //   institution: String,
-    //   degree: String,
-    //   startDate: String,
-    //   endDate: String
-    // }],
+    languages: [languageSchema],
+
     profile: {
       type: String,
       required: true
