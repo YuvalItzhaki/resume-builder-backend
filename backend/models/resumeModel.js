@@ -6,7 +6,12 @@ const contactSchema = new mongoose.Schema({
   linkedin: String,
   github: String
 });
-
+const educationSchema = new mongoose.Schema({
+  institution: String,
+  degree: String,
+  startDate: String,
+  endDate: String
+});
 const resumeSchema = mongoose.Schema(
   {
     name: {
@@ -17,9 +22,9 @@ const resumeSchema = mongoose.Schema(
       type: String,
       required: true
     },
-    
     contact: contactSchema,
-
+    education: [educationSchema],
+    
     // contact: {
     //   email: {
     //     type: String,
@@ -46,12 +51,12 @@ const resumeSchema = mongoose.Schema(
       type: [String],
       required: true
     },
-    education: [{
-      institution: String,
-      degree: String,
-      startDate: String,
-      endDate: String
-    }],
+    // education: [{
+    //   institution: String,
+    //   degree: String,
+    //   startDate: String,
+    //   endDate: String
+    // }],
     profile: {
       type: String,
       required: true
