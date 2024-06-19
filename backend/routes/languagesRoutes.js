@@ -1,5 +1,3 @@
-// routes/resume.js
-
 const express = require('express');
 const router = express.Router();
 const Resume = require('../models/resumeModel');

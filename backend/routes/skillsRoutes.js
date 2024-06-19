@@ -1,5 +1,3 @@
-// routes/resume.js
-
 const express = require('express');
 const router = express.Router();
 const Resume = require('../models/resumeModel');
@@ -15,7 +13,7 @@ router.get('/resumes', async (req, res) => {
 
 router.put('/resumes/tech_skills', async (req, res) => {
   try {
-    const { tech_skills } = req.body; // Expecting an array of strings
+    const { tech_skills } = req.body;
     if (!Array.isArray(tech_skills)) {
       throw new Error('tech_skills should be an array');
     }

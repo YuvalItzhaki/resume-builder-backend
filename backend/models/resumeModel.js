@@ -16,29 +16,21 @@ const languageSchema = new mongoose.Schema({
   value: String,
   level: String
 });
+const profileSchema = new mongoose.Schema({
+  name: String,
+  title: String
+});
 const resumeSchema = mongoose.Schema(
   {
-    name: {
-      type: String,
-      required: true
-    },
-    title: {
-      type: String,
-      required: true
-    },
+    profile: profileSchema,
     contact: contactSchema,
     education: [educationSchema],
-    
     tech_skills: {
       type: [String],
       required: true
     },
     languages: [languageSchema],
-
-    profile: {
-      type: String,
-      required: true
-    },
+    summary: String,
     experience: [{
       title: String,
       company: String,
