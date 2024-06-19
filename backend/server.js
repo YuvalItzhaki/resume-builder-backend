@@ -6,7 +6,8 @@ const connectDB = require('./config/db');
 const cors = require('cors');
 const resumeRouter = require('./routes/resumeRoutes');
 const educationRoutes = require('./routes/educationRoutes');
-const skillsRoutes = require('./routes/skillsRoutes')
+const skillsRoutes = require('./routes/skillsRoutes');
+const languagesRoutes = require('./routes/languagesRoutes')
 
 
 
@@ -34,7 +35,7 @@ app.use(passport.session());
 
 // Routes
 app.use('/api/auth', authRoutes);
-app.use('/api', resumeRouter, educationRoutes, skillsRoutes);
+app.use('/api', resumeRouter, educationRoutes, skillsRoutes, languagesRoutes);
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
