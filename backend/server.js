@@ -8,7 +8,8 @@ const resumeRouter = require('./routes/resumeRoutes');
 const educationRoutes = require('./routes/educationRoutes');
 const skillsRoutes = require('./routes/skillsRoutes');
 const languagesRoutes = require('./routes/languagesRoutes');
-const profileRoutes = require('./routes/profileRoutes')
+const profileRoutes = require('./routes/profileRoutes');
+const summaryRoutes = require('./routes/summaryRoutes')
 
 
 const app = express();
@@ -34,7 +35,7 @@ app.use(passport.session());
 
 // Routes
 app.use('/api/auth', authRoutes);
-app.use('/api', resumeRouter, educationRoutes, skillsRoutes, languagesRoutes, profileRoutes);
+app.use('/api', resumeRouter, educationRoutes, skillsRoutes, languagesRoutes, profileRoutes, summaryRoutes);
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -30,7 +30,10 @@ const resumeSchema = mongoose.Schema(
       required: true
     },
     languages: [languageSchema],
-    summary: String,
+    summary: {
+      type: String,
+      required: false
+    },
     experience: [{
       title: String,
       company: String,
