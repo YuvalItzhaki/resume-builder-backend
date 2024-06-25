@@ -7,14 +7,32 @@ router.post('/resumes', saveResume);
 
 router.get('/resumes', async (req, res) => {
     try {
-        const resume = await Resume.findOne(); // Adjust the query as necessary
+        const resume = await Resume.find(); // Adjust the query as necessary
         res.json(resume);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching resume data' });
     }
 });
 
-// Update contact information within the Resume model
+router.get('/resumes/:id', async (req, res) => {
+    try {
+        const resume = await Resume.find({_id: req.params.id});
+        res.json(resume);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching resume data' });
+    }
+});
+
+router.delete('/resumes/:id', async (req, res) => {
+    try {
+        const resume = await Resume.findByIdAndDelete({_id: req.params.id});
+        console.log('Deleting resume id:  ', req.params.id)
+        res.json(resume);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetchinggg resume data' });
+    }
+});
+
 router.put('/resumes', async (req, res) => {
     const updatedContact = req.body;
 
@@ -24,10 +42,7 @@ router.put('/resumes', async (req, res) => {
         if (!resume) {
             return res.status(404).json({ message: 'Resume not found' });
         }
-
-        // Update the contact information within the resume
         resume.contact = updatedContact;
-
         await resume.save();
 
         res.json({ message: 'Contact updated successfully', contact: resume.contact });
