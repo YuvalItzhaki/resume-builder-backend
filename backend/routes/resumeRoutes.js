@@ -7,7 +7,7 @@ router.post('/resumes', saveResume);
 
 router.get('/resumes', async (req, res) => {
     try {
-        const resume = await Resume.find(); // Adjust the query as necessary
+        const resume = await Resume.find();
         res.json(resume);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching resume data' });
@@ -48,6 +48,24 @@ router.put('/resumes', async (req, res) => {
         res.json({ message: 'Contact updated successfully', contact: resume.contact });
     } catch (error) {
         res.status(500).json({ message: 'Error updating contact data', error });
+    }
+});
+
+router.put('/resumes/:id', async (req, res) => {
+    try {
+        const updatedResume = await Resume.findByIdAndUpdate(
+            req.params.id,
+            req.body, // the updated data from the client
+            { new: true, runValidators: true } // options to return the updated document and run validators
+        );
+
+        if (!updatedResume) {
+            return res.status(404).json({ message: 'Resume not found' });
+        }
+
+        res.json(updatedResume);
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating resume data', error });
     }
 });
 
