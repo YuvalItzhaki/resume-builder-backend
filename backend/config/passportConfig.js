@@ -5,8 +5,8 @@ const User = require('../models/userModel');
 passport.use(
   new GoogleStrategy(
     {
-      clientID: '439573009446-uvdb0eij41divebmpokbtmjgh19unvdo.apps.googleusercontent.com',
-      clientSecret: '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',
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: 'http://localhost:5001/api/auth/google/callback',
     },
     async (accessToken, refreshToken, profile, done) => {
@@ -14,8 +14,7 @@ passport.use(
         let user = await User.findOne({ googleId: profile.id });
         if (user) {
           return done(null, user);
-        } 
-  
+        }
         // If user does not exist, create a new user
         user = new User({
           googleId: profile.id,
@@ -23,14 +22,14 @@ passport.use(
           name: profile.displayName,
           // Add any additional fields here
         });
-  
         await user.save();
         return done(null, user);
       } catch (error) {
         return done(error, null);
       }
-      }
-    ));
+    }
+  )
+);
 
 passport.serializeUser((user, done) => {
   done(null, user.id);

@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const passport = require('./config/passportConfig');
 const session = require('express-session');
@@ -10,7 +11,8 @@ const skillsRoutes = require('./routes/skillsRoutes');
 const languagesRoutes = require('./routes/languagesRoutes');
 const profileRoutes = require('./routes/profileRoutes');
 const summaryRoutes = require('./routes/summaryRoutes');
-const experienceRoutes = require('./routes/experienceRoutes')
+const experienceRoutes = require('./routes/experienceRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 
 const app = express();
@@ -26,7 +28,7 @@ app.use(cors({
 app.use(express.json());
 app.use(
   session({
-    secret: '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',
+    secret: process.env.GOOGLE_CLIENT_SECRET,
     resave: false,
     saveUninitialized: true,
   })
@@ -36,6 +38,7 @@ app.use(passport.session());
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 app.use('/api', resumeRouter, educationRoutes, skillsRoutes, languagesRoutes, profileRoutes, summaryRoutes, experienceRoutes);
 
 const PORT = process.env.PORT || 5001;
