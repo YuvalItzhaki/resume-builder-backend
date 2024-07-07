@@ -13,7 +13,7 @@ const profileRoutes = require('./routes/profileRoutes');
 const summaryRoutes = require('./routes/summaryRoutes');
 const experienceRoutes = require('./routes/experienceRoutes');
 const userRoutes = require('./routes/userRoutes');
-
+const cookieParser = require('cookie-parser');
 
 const app = express();
 
@@ -26,6 +26,7 @@ app.use(cors({
   credentials: true,
 }));
 app.use(express.json());
+app.use(cookieParser());
 app.use(
   session({
     secret: process.env.GOOGLE_CLIENT_SECRET,
