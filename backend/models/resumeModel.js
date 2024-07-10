@@ -22,6 +22,11 @@ const profileSchema = new mongoose.Schema({
 });
 const resumeSchema = mongoose.Schema(
   {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'User' // Assuming you have a User model
+    },
     profile: profileSchema,
     contact: contactSchema,
     education: [educationSchema],

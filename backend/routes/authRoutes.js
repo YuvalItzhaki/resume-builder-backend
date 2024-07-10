@@ -16,13 +16,23 @@ router.get('/google/callback',
     const token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET);
     
     // Set the token as a secure HTTP-only cookie
-    res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'strict' });
-    console.log('token is: ', token);
+    res.cookie('token', token, { httpOnly: true, secure: false, sameSite: 'strict' }); // Use secure: true in production
     
     // Redirect to the desired route
     res.redirect('http://localhost:5173/create-resume'); // Adjust the redirect URL as needed
   }
 );
+
+router.get('/token', (req, res) => {
+  const token = req.cookies.token;
+  
+  if (token) {
+    res.json({ token });
+  } else {
+    res.status(401).json({ error: 'No token found' });
+  }
+});
+
 
 // Protected route to fetch current user information
 router.get('/user', protect, (req, res) => {
@@ -45,7 +55,7 @@ router.get('/user', protect, (req, res) => {
 //     res.redirect('/login'); // Redirect to login page after logout
 //   });
 // });
-router.get('/logout', (req, res) => {
+router.post('/logout', (req, res) => {
   req.logout(() => {
     // Clear the token cookie on logout
     res.clearCookie('token');

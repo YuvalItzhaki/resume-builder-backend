@@ -1,9 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const { saveResume } = require('../controllers/resumeController');
+const { saveResume, getResumesByUserId } = require('../controllers/resumeController');
 const Resume = require('../models/resumeModel');
+const {authenticateUser} = require('../middleware/authMiddleware'); // Ensure the path is correct
 
-router.post('/resumes', saveResume);
+
+// router.post('/resumes', saveResume);
+
+router.post('/resumes', authenticateUser, saveResume);
+
+
+router.get('/resumes/user/:userId', getResumesByUserId);
 
 router.get('/resumes', async (req, res) => {
     try {

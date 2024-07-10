@@ -26,4 +26,27 @@ const protect = asyncHandler(async (req, res, next) => {
   }
 });
 
-module.exports = { protect };
+const authenticateUser = async (req, res, next) => {
+  try {
+    const authHeader = req.header('Authorization');
+
+    if (!authHeader) {
+      return res.status(401).json({ message: 'Authorization header missing' });
+    }
+
+    const token = authHeader.replace('Bearer ', '');
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = await User.findById(decoded.id).select('-password');
+
+    if (!req.user) {
+      return res.status(401).json({ message: 'User not found' });
+    }
+
+    next();
+  } catch (error) {
+    res.status(401).json({ message: 'Not authorized, token failed', error });
+  }
+};
+
+module.exports = { protect, authenticateUser };
