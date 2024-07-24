@@ -46,6 +46,12 @@ app.use(
     saveUninitialized: true,
   })
 );
+app.use(
+  session({ 
+    secret: process.env.LINKEDIN_CLIENT_SECRET, 
+    resave: false, 
+    saveUninitialized: true }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 

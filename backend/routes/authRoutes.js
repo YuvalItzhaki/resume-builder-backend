@@ -5,9 +5,7 @@ const { protect } = require('../middleware/authMiddleware'); // Adjust the path 
 
 const router = express.Router();
 
-router.get(
-  '/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] })
+router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] })
 );
 
 router.get('/google/callback', 
@@ -22,6 +20,17 @@ router.get('/google/callback',
     res.redirect('http://localhost:5173/create-resume'); // Adjust the redirect URL as needed
   }
 );
+
+
+router.get('/linkedin', passport.authenticate('linkedin'));
+
+router.get('/linkedin/callback',
+  passport.authenticate('linkedin', { failureRedirect: '/login' }),
+  (req, res) => {
+    res.redirect('/');
+  }
+);
+
 
 router.get('/token', (req, res) => {
   const token = req.cookies.token;
