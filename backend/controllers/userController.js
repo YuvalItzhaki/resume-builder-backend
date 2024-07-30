@@ -8,7 +8,15 @@ const generateToken = require('../utils/generateToken');
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
+  console.log('Authenticating user:', email);
+
   const user = await User.findOne({ email });
+
+  if (user) {
+    console.log('User found:', user);
+  } else {
+    console.log('User not found');
+  }
 
   if (user && (await user.matchPassword(password))) {
     res.cookie('token', generateToken(user._id), { httpOnly: true, secure: true, sameSite: 'strict' });
@@ -29,11 +37,13 @@ const authUser = asyncHandler(async (req, res) => {
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
+  console.log('Registering user:', { name, email, password });
+
   const userExists = await User.findOne({ email });
 
   if (userExists) {
-    res.status(400);
-    throw new Error('User already exists');
+    res.status(400).json({ message: 'User already exists. Please login.' });
+    return;
   }
 
   const user = await User.create({
